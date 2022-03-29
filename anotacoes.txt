@@ -1,0 +1,42 @@
+- Escrever uma API de controle de alunos para uma escola de idiomas.
+- O ponto incial eh um diagrama de banco de dados onde as tabelas ja estao criadas.
+- Usar um ORM (Mapeador de Objeto Relacional), Sequelize.
+- O Sequelize abstrai as operacoes e comandos de SQL e faz com que possamos usar apenas JavaScript 
+para se conectar e operar o banco de dados.
+- As instrucoes serao enviadas ao banco de dados via JavaScript e nao por SQL.
+- Organizar a aplicacao no formato MVC.
+- CRUD com Sequelize.
+- Criar rotas e usar os verbos do HTTP, GET, POST, PUT e DELETE.
+
+Criacao dos arquivos bases do projeto:
+
+- npm init -y
+- npm install express -save-dev -E
+- npm install nodemon -save-dev -E
+- npm install body-parser -save-dev -E 
+
+- npm install mysql2 --save -E
+- npm install sequelize --save
+- npm install sequelize-cli --save
+- npm install path --save -E
+
+- Para inciar o projeto: npm start
+- Criar o arquivo .gitignore e adicionar a pasta node_modules para nao subi-la ao git.
+
+- O Sequelize CLI serve para usar os recursos de linha de comando.
+- CLI significa Command Line Interface.
+
+- No sequelize conseguimos criar um projeto vazio que serve como pontapé inicial.
+- npx sequelize-cli init
+
+- O npx eh usado para rodar dependencias que estao instaladas localmente e nao de forma global.
+
+- Criaremos um arquivo chamado .sequelizerc que servira para registrar o caminho das pastas:
+    - config
+    - models-path
+    - seeders-path
+    - migrations-path
+
+Aula 07 - Conectando com o banco
+
+- xxx...
