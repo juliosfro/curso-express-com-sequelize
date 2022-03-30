@@ -1,36 +1,71 @@
 const database = require('../models');
 
 class PessoaController {
-  static async readAll(req, res) {
+
+  // Funcao para ler e trazer todos os registros de pessoas que estao na base de dados.
+  static async readAll(request, response) {
     try {
       const pessoas = await database.Pessoas.findAll();
-      return res.status(200).json(pessoas);
+      return response.status(200).json(pessoas);
     } catch (error) {
-      return res.status(500).json(error.message);
+      return response.status(500).json(error.message);
     }
   }
 
-  static async readById(req, res) {
-    const { id } = req.params;
+  // Funcao para buscar um registro de pessoa por id.
+  static async readById(request, response) {
+    const { id } = request.params;
     try {
       const pessoa = await database.Pessoas.findOne({
         where: {
           id: Number(id)
         }
       })
-      return res.status(200).json(pessoa);
+      return response.status(200).json(pessoa);
     } catch (error) {
-      return res.status(500).json(error.message);
+      return response.status(500).json(error.message);
     }
   }
 
-  static async create(req, res) {
-    const novaPessoa = req.body;
+  // Funcao para inserir um novo registro de pessoa na base de dados.
+  static async create(request, response) {
+    const novaPessoa = request.body;
     try {
       const novaPessoaCriada = await database.Pessoas.create(novaPessoa);
-      return res.status(200).json(novaPessoaCriada);
+      return response.status(200).json(novaPessoaCriada);
     } catch (error) {
-      return res.status(500).json(error.message);
+      return response.status(500).json(error.message);
+    }
+  }
+
+  // Funcao para atualizar um registro por id.
+  static async updateById(request, response) {
+    const { id } = request.params;
+    const novasInfosPessoa = request.body;
+
+    try {
+      // Para inserir as novas informacoes de registro de pessoa.
+      await database.Pessoas.update(novasInfosPessoa, { where: { id: Number(id) } });
+
+      // O metodo update do sequelize retorna apenas zero ou um, fez ou nao fez.
+      const pessoaAtualizada = await database.Pessoas.findOne({ where: { id: Number(id) } });
+      return response.status(200).json(pessoaAtualizada);
+
+    } catch (error) {
+      return response.status(500).json(error.message);
+    }
+  }
+
+  // Funcao para deletar um registro por id.
+  static async deleteById(request, response) {
+    const { id } = request.params;
+
+    try {
+      // O nome da funcao do sequelize para apagar registros eh destroy.
+      await database.Pessoas.destroy({ where: { id: Number(id) } });
+      return response.status(200).json({ message: `Pessoa id numero: ${id} apagada.` });
+    } catch (error) {
+      return response.status(500).json(error.message);
     }
   }
 }

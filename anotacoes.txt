@@ -179,4 +179,15 @@ da tabela contida no banco de dados.
     o arquivo que eh o ponto de entrada da aplicacao.
     
     - Vamos criar um arquivo de rota para Pessoas chamado pessoasRoute.js
-    - 
+    
+- Métodos de CRUD:
+
+- Aprendemos a:
+    * Utilizar outros métodos do Sequelize para as operações de CRUD.
+    * Enviar dados através de parâmetros de requisição HTTP.
+    * Enviar dados através do corpo da requisição HTTP.
+    * Criar rotas para cada operação.
+    * Associar as rotas a cada método do controlador Pessoas.
+
+- Criando mais tabelas      => Relacoes e Associacoes.
+    - xxx...
