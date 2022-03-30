@@ -1,19 +1,11 @@
-const express = require('express');
-const bodyParser = require('body-parser');
+const express = require('express')
+const routes = require('./routes')
 
-const app = express();
+const app = express()
+const port = 3000
 
-app.use(bodyParser.json());
+routes(app)
 
-const port = 3000;
+app.listen(port, () => console.log(`servidor está rodando na porta ${port}`))
 
-app.get('/home', (request, response) => response
-                    .status(200)
-                    .send({mensagem: 'Seja bem vindo a pagina inicial.'})
-                 );
-
-app.listen(port, () => console.log(`O servidor esta rodando na porta ${port}`));
-
-console.log(`http://localhost:3000/home`);
-
-module.exports = app;
+module.exports = app

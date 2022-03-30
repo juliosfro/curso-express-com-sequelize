@@ -37,6 +37,147 @@ Criacao dos arquivos bases do projeto:
     - seeders-path
     - migrations-path
 
-Aula 07 - Conectando com o banco
+- Criar uma database no MySql chamada escola_idioma;
+    - create database escola_idioma;
 
-- xxx...
+- As tabelas que iremos usar no banco de dados serao criadas diretamente pelo Sequelize.
+
+- Avisar a aplicacao que ja existe um banco Sql criado e que eh para se conectar com ele.
+    - Dentro da pasta config do sequelize no  arquivo config.json passar as instrucoes.
+
+- O segundo arquivo que o Sequelize criou chamado index.js dentro da pasta model.
+    - Esse arquivo vai gerenciar todos os modelos do banco de dados.
+    - Os modelos serao criados de acordo com as tabelas do banco de dados.
+    - O Sequelize ira percorrer todos os modelos que estao dentro da pasta usando fs (file system).
+
+- Comando para criar a model de pessoas.
+    - npx sequelize-cli model:create --name Pessoas --attributes nome:string,ativo:boolean,email:string,role:string
+
+- Assim que um novo modelo eh criado entao uma nova migracao tambem eh criada.
+    - Dentro da pasta migrations eh criado um arquivo que se refere a data de criacao.
+    - Nesse arquivo estao as especificacoes de id (chave primaria).
+    - O sequelize cria de forma automatica uma coluna id entao nao eh necessario criar quando estiver 
+    - especificando os atributos da tabela no comando model:create do sequelize.
+
+- A funcao up eh executada quando criamos a migracao.
+- A funcao down eh executada quando desfazemos a migracao.
+
+- Para trocar de gerenciador de banco de dados (MySql, PostGreSql, Oracle) basta apenas ir no arquivo config.json na pasta config.
+- Podemos especificar uma base de dados exclusivamente para testes.
+- O Sequelize aplica automaticamente o dialeto do SQL do banco de dados especificado.
+- Eh necessario rodar as migracoes (migrations) para fazer as alteracoes na base de dados MySql.
+
+- O que são migrações?
+    - Migrations se refere a migracao de dados, transferir dados de uma plataforma para outra.
+    - Eh usada quando eh necessario mudar o banco de dados ou o service.
+    - Quando um banco estiver grande transportar os dados pode ser complicado.
+
+    - Migracao com ORM: Alteracoes incrementais e rastreaveis no banco de dados.
+    - As alteracoes sao rastreaveis pois podemos voltar para como estava antes, semelhante ao versionamento git.
+    - Podemos voltar uma tabela ao estado anterior se caso algo der errado.
+
+- Mudancas no Esquema:
+    - Coordenar alteracoes feitas por diferentes pessoas do time nas tabelas do banco de dados.
+    - Podemos ver qual alteracao sobreescreveu a outra, podemos ver usando arquivos de migracao.
+    - Rastrear (e reverter) alteracoes feitas no banco para debugar conflitos e erros.
+    - No Sequelize temos um arquivo que guarda todo o historico de migracoes feitas no banco de dados.
+
+- Para saber mais: Singular e plural:
+    - O sequelize costuma colocar os nomes das tabelas no plural de forma automatica.
+    - Devemos ja declara-las no plural no nomemento da criacao da tabela para evitar que o 
+    sequelize converta para o plural de forma errada, por exemplo, nivel => nivels.
+    - Existe um recurso chamado freezeTableName para “congelar” o nome da tabela, assim o Sequelize não vai tentar pluralizar.
+    - Os nomes das tabelas tambem podem ser definidos de forma manual com o recurso tableName => tableName: 'Employees'
+
+- Rodando migrações:
+    - Depois de criado o modelo da primeira tabela que eh a tabela de pessoas vamos rodar a migracao.
+    - Para rodar a migracao: npx sequelize-cli db:migrate
+
+- Para verificar diretamente no MySql se tudo foi criado corretamente:
+    - use escola_idioma;
+    - show tables;
+    - describe Pessoas;
+
+- O MySql eh case sensitive.
+- O Sequelize cria de forma automatica no banco de dados uma tabela chamada SequelizeMeta.
+
+- Populando o banco:
+
+    insert into Pessoas (
+	nome,
+    ativo,
+    email,
+    role,
+    createdAt,
+    updatedAt
+) values (
+	"Julio",
+     1,
+    "juliosfro@gmail.com",
+    "estudante",
+     NOW(),
+     NOW()
+);
+
+- Para verificar o que foi inserido: select * from Pessoas;
+
+- Vamos criar um arquivo de seeders que eh um recurso do sequelize para popular nosso banco de dados.
+- O nome do arquivo de seed (semente) pode ser qualquer nome, nao precisa ser necessariamente o mesmo nome 
+da tabela contida no banco de dados.
+
+- Para criar o arquivo de seed da tabela Pessoa:
+    - npx sequelize-cli seed:generate --name demo-pessoa 
+
+- O arquivo de seed demo-pessoa servira para popular a tabela Pessoa.
+
+- Os arquivos de seeders sempre sao criados com a mesma estrutura entao devemos apagar os comentarios.
+- bulkInsert significa inserir em lote.
+- bulkDelete significa deletar em lote.
+
+- Eh necessario rodar o comando de seed para o Sequelize se conectar com o banco e inserir os dados.
+    - npx sequelize-cli db:seed:all     => Esse comando executa todos os arquivos de seeders contidos na pasta.
+    - Usamos o comando all pois soh tinha um arquivo dentro da pasta e queriamos executar apenas ele.
+
+- Para desfazer uma migracao: npx sequelize-cli db:migrate:undo
+- Para limpar os dados de seed (despopular) o banco de dados: npx sequelize db:seed:undo
+
+- Exemplos da alura: https://cursos.alura.com.br/course/orm-nodejs-api-sequelize-mysql/task/77026
+
+- O que aprendemos:
+    * Criar modelos e arquivos de migração via terminal
+    * O que são e para que servem migrações com ORMs
+    * Executar migrações para criação de tabelas no banco
+    * Popular tabelas automaticamente através de arquivos seed
+
+- O Modelo MVC:
+    - Modelo      -> Modelo
+    - View        -> Vista
+    - Controller  -> Controlador
+
+- Modelo: Nele estao contidas as regras de negocio.
+- Vista: Retorna JSON/HTML.
+- Controlador: Faz o intermedio entre o modelo e o restante da aplicacao.
+
+- Queremos acessar o modelo pessoas e queremos ver um JSON com todas as pessoas que estao cadastradas.
+- Cada modelo tem o seu proprio controlador e a rota eh responsavel por chamar o controlador.
+- O front-end normalmente recebe os dados no formato JSON.
+
+- A camada de rota (router) eh a que recebe a requisicao.
+- A controller consulta a model e retorna uma view.
+- Existe varios padroes de arquitetura conforme a necessidade.
+
+- Criando o controlador:
+    - Vamos criar o controlador e a rota para a tabela de pessoas.
+    - Criar uma pasta chamada Controllers dentro da pasta API.
+        - Criar um arquivo chamado PessoaController
+    - PessoaController sera uma classe.
+
+- Organizando as rotas:
+    - Dentro da pasta api vamos criar uma pasta chamada routers para guardar as nossas rotas.
+    - Criar um arquivo chamado index.js dentro da pasta routers.
+    - O arquivo index.js dentro da pasta routers sera o ponto de entrada das rotas, assim como existe
+    o arquivo que eh o ponto de entrada da aplicacao.
+    
+    - Vamos criar um arquivo de rota para Pessoas chamado PessoasRoute.js
+    - 
+
