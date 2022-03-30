@@ -178,6 +178,5 @@ da tabela contida no banco de dados.
     - O arquivo index.js dentro da pasta routers sera o ponto de entrada das rotas, assim como existe
     o arquivo que eh o ponto de entrada da aplicacao.
     
-    - Vamos criar um arquivo de rota para Pessoas chamado PessoasRoute.js
+    - Vamos criar um arquivo de rota para Pessoas chamado pessoasRoute.js
     - 
-

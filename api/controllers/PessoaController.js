@@ -1,38 +1,38 @@
-const database = require('../models')
+const database = require('../models');
 
 class PessoaController {
-  static async pegaTodasAsPessoas(req, res){
+  static async readAll(req, res) {
     try {
-      const todasAsPessoas = await database.Pessoas.findAll()
-      return res.status(200).json(todasAsPessoas)  
+      const pessoas = await database.Pessoas.findAll();
+      return res.status(200).json(pessoas);
     } catch (error) {
-      return res.status(500).json(error.message)
+      return res.status(500).json(error.message);
     }
   }
 
-  static async pegaUmaPessoa(req, res) {
-    const { id } = req.params
+  static async readById(req, res) {
+    const { id } = req.params;
     try {
-      const umaPessoa = await database.Pessoas.findOne( { 
-        where: { 
-          id: Number(id) 
+      const pessoa = await database.Pessoas.findOne({
+        where: {
+          id: Number(id)
         }
       })
-      return res.status(200).json(umaPessoa)
+      return res.status(200).json(pessoa);
     } catch (error) {
-      return res.status(500).json(error.message)
+      return res.status(500).json(error.message);
     }
   }
 
-  static async criaPessoa(req, res) {
-    const novaPessoa = req.body
+  static async create(req, res) {
+    const novaPessoa = req.body;
     try {
-      const novaPessoaCriada = await database.Pessoas.create(novaPessoa)
-      return res.status(200).json(novaPessoaCriada)
+      const novaPessoaCriada = await database.Pessoas.create(novaPessoa);
+      return res.status(200).json(novaPessoaCriada);
     } catch (error) {
-      return res.status(500).json(error.message)
+      return res.status(500).json(error.message);
     }
   }
 }
 
-module.exports = PessoaController
+module.exports = PessoaController;
