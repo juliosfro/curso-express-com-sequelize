@@ -3,7 +3,7 @@ const {
   Model, Sequelize
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  const Niveis = Sequelize.define('Niveis', {
+  const Niveis = sequelize.define('Niveis', {
     descr_nivel: DataTypes.STRING
   }, {});
 

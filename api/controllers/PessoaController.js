@@ -1,3 +1,4 @@
+const Sequelize = require('sequelize')
 const database = require('../models');
 
 class PessoaController {
@@ -68,6 +69,25 @@ class PessoaController {
       return response.status(500).json(error.message);
     }
   }
+
+  // Funcao para buscar um registro de matricula por id.
+  // select * from Matriculas where Matriculas.estudante_id = 1 and Matriculas.id = 5;
+  // Esta fazendo uma consulta dentro da tabela de Matriculas passando dois parametros.
+  static async pegaUmaMatricula(request, response) {
+    const { estudanteId, matriculaId } = request.params;
+    try {
+      const matricula = await database.Matriculas.findOne({
+        where: {
+          id: Number(matriculaId),
+          estudante_id: Number(estudanteId)
+        }
+      })
+      return response.status(200).json(matricula);
+    } catch (error) {
+      return response.status(500).json(error.message);
+    }
+  }
+
 }
 
 module.exports = PessoaController;

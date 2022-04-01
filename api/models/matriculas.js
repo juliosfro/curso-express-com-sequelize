@@ -3,7 +3,7 @@ const {
   Model, Sequelize
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  const Matriculas = Sequelize.define('Matriculas', {
+  const Matriculas = sequelize.define('Matriculas', {
     status: DataTypes.STRING
   }, {});
 

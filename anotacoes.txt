@@ -294,4 +294,39 @@ estrangeiras (foreign key):
 multiplos id por exemplo, quando tem relacionamento 1:n 
 
 - Populando tabelas:
+    - Vamos criar o arquivo de seed para Nivel.
+    - Os arquivos de seed tambem devem ser criados em ordem.
+
+    - npx sequelize-cli seed:generate --name demo-nivel
+    - npx sequelize-cli seed:generate --name demo-turmas
+    - npx sequelize-cli seed:generate --name demo-matriculas
+
+- Aprendemos a:
+     * Interpretar o diagrama de banco.
+     * Identificar os tipos de relação pedidos no projeto.
+     * Associar tabelas através de métodos do Sequelize.
+     * Referenciar tabelas associadas.
+     * Migrar tabelas associadas.
+     * Popular tabelas associadas.
+
+- Primeiro, vamos criar os arquivos de controladores para Niveis e Turmas.
+
+     * controllers/NivelController.js
+     * controllers/TurmaController.js
+
+- Agora vamos criar os arquivos de rotas referentes a esses dois modelos:
+
+    * routes/niveisRoute.js
+    * routes/turmasRoute.js
+
+- Lendo uma matrícula:
+    - Falta criar a controller de Matricula, MatriculaController.
+    - Um end-point de matricula solto por exemplo sem estar relacionado com pessoa nao faz sentido.
+    - Nao vamos criar para Matricula um controlador proprio, vamos fazer isso dentro do controlador
+    de Pessoas, entao nao havera controlador proprio e nem rota propria.
+    - A matricula sempre estara vinculada a uma pessoa, por isso a funcao de fazer matricula estara 
+    dentro da controller de Pessoa.
+
+- Criando uma matrícula:
     - xxx...
+    

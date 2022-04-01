@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  const Turmas = Sequelize.define('Turmas', {
+  const Turmas = sequelize.define('Turmas', {
     data_inicio: DataTypes.DATEONLY
   }, {});
 
@@ -16,12 +16,12 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     // A segunda parte eh dizer a quem pertence, sendo que a primeira eh a cardinalidade hasMany por exemplo.
-    Turmas.belongsTo(Models.Pessoas, {
+    Turmas.belongsTo(models.Pessoas, {
       foreignKey: 'docente_id'
     });
 
     // Turma se associa com Niveis.
-    Turmas.belongsTo(Models.Niveis, {
+    Turmas.belongsTo(models.Niveis, {
       foreignKey: 'nivel_id'
     });
   };
