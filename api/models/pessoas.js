@@ -6,8 +6,16 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     role: DataTypes.STRING
   }, {});
-  Pessoas.associate = function(models) {
+  Pessoas.associate = function (models) {
     // associations can be defined here
+    // A.hasMany(B);
+    // Pessoas tem relacao de um para muitos (1:n) com Turmas e Matriculas.
+    Pessoas.hasMany(models.Turmas, {
+      foreignKey: 'docente_id'
+    });
+    Pessoas.hasMany(models.Matriculas, {
+      foreignKey: 'estudante_id'
+    });
   };
   return Pessoas;
 };

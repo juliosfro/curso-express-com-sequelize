@@ -190,4 +190,108 @@ da tabela contida no banco de dados.
     * Associar as rotas a cada método do controlador Pessoas.
 
 - Criando mais tabelas      => Relacoes e Associacoes.
+    - Comecamos sempre criando as tabelas na ordem em que nao usam chave estrangeira
+    foreign key.
+
+- Para criar a tabela de Niveis:
+    - npx sequelize-cli model:create --name Niveis --attributes descr_nivel:string
+    - Com o comando acima eh criado um novo modelo e uma nova migracao.
+
+- Para criar a tabela de Turmas:
+    - npx sequelize-cli model:create --name Turmas --attributes data_inicio:dateonly
+    - Sempre colocamos somente os dados que realmente pertecem a tabela, chaves primarias e 
+    chaves estrangeiras (foreign key) nao eh necessario colocar no comando.
+
+- Para criar a tabela de Matriculas:
+    - npx sequelize-cli model:create --name Matriculas --attributes status:string  
+
+- O Sequelize roda as migracoes na ordem que elas foram criadas, por isso o nome do arquivo gerado 
+eh sempre uma data e hora.
+
+- Antes de rodar a migracao devemos passar para o Sequelize quais sao as chaves estrangeiras que 
+cada tabela usa.
+
+- One-To-One            => Um para um.
+- One-To-Many           => Um para muitos.
+- Many-To-Many          => Muitos para muitos.
+
+- As associacoes sao feitas atraves desses quatro metodos:
+    * A associação HasOne               => 
+    * A associação BelongsTo            =>
+    * A associação HasMany              => Relacao de um para muitos. => 1:n
+    * A associação BelongsToMany        => 
+
+- As associacoes sao feitas nos modelos:
+    - Vamos comecar pelo modelo de pessoas:
+
+    -     // Pessoas tem relacao de um para muitos (1:n) com Turmas e Matriculas.
+             Pessoas.hasMany(models.Turmas);
+             Pessoas.hasMany(models.Matriculas);
+
+- Exemplo:
+    - Equipe.hasMany(Atleta);
+    - Atleta.belongsTo(Equipe);
+
+- Para dar nomes para as colunas da tabela, por exemplo para dar nomes para as foreign keys.
+        - { foreignKey: 'myFooId' }         => Passamos um objeto como segundo parametro.
+
+- Temos que fazer os dois lados das associacoes usando as funcoes hasMany e belongsTo.
+    - BelongsTo         => Significa pertence a:
+
+- O proximo passo eh associar nos arquivos de migracoes em qual das colunas as foreign keys 
+vao ser adicionadas.
+
+- O ultimo passo eh rodar os arquivos de migracoes.
+
+- Todas as associacoes devem ser feitas com os dois metodos.
+
+- Temos que referenciar nos arquivos de migracao quais sao as colunas que vao receber chaves
+estrangeiras (foreign key):
+    - Por enquanto os arquivos de migracao estao somente com as colunas que sao naturais.
+    - Ainda nao adicionamos as colunas que receberao chaves estrangeiras.
+    - No arquivo dentro da pasta migrations chamado create-turmas vamos adicionar as foreignKey
+    como propriedade de create table.
+
+- Exemplo:
+
+- As informacoes abaixo foram inseridas no arquivo create-turmas.
+
+     docente_id: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: { model: 'Pessoas', key: 'id' }
+      }, 
+      nivel_id: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: { model: 'Niveis', key: 'id' }
+      },
+
+- As informacoes abaixo foram inseridas no  arquivo create-matriculas.
+
+      estudante_id: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: { model: 'Pessoas', key: 'id' }
+      }, 
+      turma_id: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: { model: 'Turmas', key: 'id' }
+      },
+
+- As alteracoes devem ser feitas em todos os arquivos (entidades) que tem fk.
+
+- Quais associacoes devem ser feitas e atraves de quais colunas? Quais sao as chaves estrangeiras?
+
+- Comando para rodar as migracoes:
+    - O Sequelize ira criar as tabelas no banco.
+    - npx sequelize-cli db:migrate
+
+- O proximo passo eh popular as tabelas e fazer os testes dos end-points com o Postman.
+
+- No MySql tem um atributo chamado MULL que significa que aceita multiplas informacoes, 
+multiplos id por exemplo, quando tem relacionamento 1:n 
+
+- Populando tabelas:
     - xxx...
