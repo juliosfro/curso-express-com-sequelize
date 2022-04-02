@@ -88,6 +88,63 @@ class PessoaController {
     }
   }
 
+  // Funcao para registrar uma nova matricula.
+  static async novaMatricula(request, response) {
+    const { estudanteId } = request.params;
+    const novaMatricula = { ...request.body, estudante_id: Number(estudanteId) }
+    try {
+      const novaMatriculaCriada = await database.Matriculas.create(novaMatricula);
+      return response.status(200).json(novaMatriculaCriada);
+    } catch (error) {
+      return response.status(500).json(error.message);
+    }
+  }
+
+  // Funcao para atualizar um registro de Matricula.
+  // http://localhost:3000/pessoas/1/matricula/5
+
+  static async atualizaMatricula(request, response) {
+    const { estudanteId, matriculaId } = request.params;
+    const novasInfosMatricula = request.body;
+
+    try {
+      // Para inserir as novas informacoes de registro de matricula.
+      await database.Matriculas.update(novasInfosMatricula, {
+        where: {
+          id: Number(matriculaId),
+          estudante_id: Number(estudanteId)
+        }
+      });
+
+      // O metodo update do sequelize retorna apenas zero ou um, fez ou nao fez.
+      const matriculaAtualizada = await database.Matriculas.findOne({
+        where: { id: Number(matriculaId) }
+      });
+      return response.status(200).json(matriculaAtualizada);
+
+    } catch (error) {
+      return response.status(500).json(error.message);
+    }
+  }
+
+  // Funcao para deletar um registro por id.
+  static async apagaMatricula(request, response) {
+    const { estudanteId, matriculaId } = request.params;
+
+    try {
+      // O nome da funcao do sequelize para apagar registros eh destroy.
+      await database.Matriculas.destroy({
+        where: {
+          id: Number(matriculaId),
+          estudante_id: Number(estudanteId)
+        }
+      });
+      return response.status(200).json({ message: `Matricula id numero: ${matriculaId} apagada.` });
+    } catch (error) {
+      return response.status(500).json(error.message);
+    }
+  }
+
 }
 
 module.exports = PessoaController;

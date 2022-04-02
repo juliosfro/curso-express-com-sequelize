@@ -328,5 +328,12 @@ multiplos id por exemplo, quando tem relacionamento 1:n
     dentro da controller de Pessoa.
 
 - Criando uma matrícula:
-    - xxx...
-    
+
+- Aprendemos a:
+    * Adicionar novos controladores;
+    * Trabalhar com mais de um modelo no mesmo controlador;
+    * Enviar dados via parâmetros e corpo das requisições;
+    * Utilizar estes dados para encontrar informações no banco;
+    * Gerar estruturas de dados do tipo JSON com informações úteis ao usuário.
+
+- Projeto finalizado...    
