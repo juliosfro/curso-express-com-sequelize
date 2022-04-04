@@ -137,6 +137,7 @@ da tabela contida no banco de dados.
 - Eh necessario rodar o comando de seed para o Sequelize se conectar com o banco e inserir os dados.
     - npx sequelize-cli db:seed:all     => Esse comando executa todos os arquivos de seeders contidos na pasta.
     - Usamos o comando all pois soh tinha um arquivo dentro da pasta e queriamos executar apenas ele.
+    - npx sequelize-cli db:seed:undo:all    => Para limpar todas as tabelas do banco que receberam dados de seed.
 
 - Para desfazer uma migracao: npx sequelize-cli db:migrate:undo
 - Para limpar os dados de seed (despopular) o banco de dados: npx sequelize db:seed:undo
