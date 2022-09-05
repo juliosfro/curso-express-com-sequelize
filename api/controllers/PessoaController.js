@@ -1,11 +1,21 @@
-const Sequelize = require('sequelize')
-const database = require('../models');
-
+import database from '../models';
 class PessoaController {
 
+  /* Essa função utilizara o escopo default */
+  static async readAllActivePerson(_request, response) {
+    try {
+      const pessoasAtivas = await database.Pessoas.findAll();
+
+      response.status(200).json(pessoasAtivas);
+    } catch (error) {
+      response.status(500).json(error.message);
+    }
+  }
+
+  /* Essa função utilizara o escopo personalizado todos */
   static async readAll(_request, response) {
     try {
-      const pessoas = await database.Pessoas.findAll();
+      const pessoas = await database.Pessoas.scope('todos').findAll();
 
       response.status(200).json(pessoas);
     } catch (error) {
@@ -69,6 +79,19 @@ class PessoaController {
       await database.Pessoas.destroy({ where: { id: Number(id) } });
 
       response.status(200).json({ message: `Pessoa id numero: ${id} apagada.` });
+    } catch (error) {
+      response.status(500).json(error.message);
+    }
+  }
+
+  /* Para desfazer a ação do soft delete com o paranoid e deletedAt */
+  static async restauraPessoa(request, response) {
+    const { params } = request;
+    const { id } = params;
+
+    try {
+      await database.Pessoas.restore({ where: { id: Number(id) } });
+      response.status(200).json({ mensagem: `id: ${id} restaurado.` })
     } catch (error) {
       response.status(500).json(error.message);
     }

@@ -28,6 +28,7 @@ Criacao dos arquivos bases do projeto:
 
 - No sequelize conseguimos criar um projeto vazio que serve como pontapé inicial.
 - npx sequelize-cli init
+- Para criar uma nova migração usando o sequelize: npx sequelize migration:create --name add-collumn-pessoas
 
 - O npx eh usado para rodar dependencias que estao instaladas localmente e nao de forma global.
 

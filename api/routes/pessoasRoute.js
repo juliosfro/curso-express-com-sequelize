@@ -1,10 +1,11 @@
-const { Router } = require('express');
-const PessoaController = require('../controllers/PessoaController');
+import { Router } from 'express';
+import PessoaController from '../controllers/PessoaController';
 
 const router = Router();
 
 // Declaracao de todas as rotas presentes na aplicacao.
-router.get('/pessoas', PessoaController.readAll);
+router.get('/pessoas', PessoaController.readAllActivePerson);
+router.get('/pessoas/todos', PessoaController.readAll);
 router.get('/pessoas/:id', PessoaController.readById);
 router.post('/pessoas', PessoaController.create);
 router.put('/pessoas/:id', PessoaController.updateById);
@@ -27,5 +28,7 @@ router.put('/pessoas/:estudanteId/matricula/:matriculaId', PessoaController.atua
    SQL  =>  DELETE FROM `Matriculas` WHERE `id` = 6 AND `estudante_id` = 2
 */
 router.delete('/pessoas/:estudanteId/matricula/:matriculaId', PessoaController.apagaMatricula);
+
+router.post('/pessoas/:Id/restaura', PessoaController.restauraPessoa);
 
 module.exports = router;
